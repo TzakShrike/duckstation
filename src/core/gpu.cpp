@@ -658,7 +658,8 @@ void GPU::UpdateCRTCTickEvent()
   if (g_timers.IsExternalIRQEnabled(DOT_TIMER_INDEX))
   {
     const TickCount dots_until_irq = g_timers.GetTicksUntilIRQ(DOT_TIMER_INDEX);
-    const TickCount ticks_until_irq = (dots_until_irq * m_crtc_state.dot_clock_divider) - m_crtc_state.fractional_dot_ticks;
+    const TickCount ticks_until_irq =
+      (dots_until_irq * m_crtc_state.dot_clock_divider) - m_crtc_state.fractional_dot_ticks;
     ticks_until_event = std::min(ticks_until_event, std::max<TickCount>(ticks_until_irq, 0));
   }
 
@@ -830,7 +831,7 @@ void GPU::UpdateCommandTickEvent()
     m_command_tick_event->SetIntervalAndSchedule(GPUTicksToSystemTicks(m_pending_command_ticks));
 }
 
-bool GPU::ConvertScreenCoordinatesToBeamTicksAndLines(s32 window_x, s32 window_y, u32* out_tick, u32* out_line) const
+bool GPU::ConvertScreenCoordinatesToBeamPosition(s32 window_x, s32 window_y, u32* out_dot, u32* out_line) const
 {
   const auto [display_x, display_y] = m_host_display->ConvertWindowCoordinatesToDisplayCoordinates(
     window_x, window_y, m_host_display->GetWindowWidth(), m_host_display->GetWindowHeight(),
@@ -846,10 +847,57 @@ bool GPU::ConvertScreenCoordinatesToBeamTicksAndLines(s32 window_x, s32 window_y
     return false;
   }
 
-  *out_line =
-    (static_cast<u32>(display_y) >> BoolToUInt8(m_GPUSTAT.vertical_interlace)) + m_crtc_state.vertical_active_start;
-  *out_tick = (static_cast<u32>(display_x) * m_crtc_state.dot_clock_divider) + m_crtc_state.horizontal_active_start;
+  *out_line = (static_cast<u32>(display_y) >> BoolToUInt8(m_GPUSTAT.vertical_interlace));
+  *out_dot = static_cast<u32>(display_x);
   return true;
+}
+
+bool GPU::ConvertScreenCoordinatesToBeamTicksAndLines(s32 window_x, s32 window_y, u32* out_tick, u32* out_line) const
+{
+  u32 dot;
+  if (!ConvertScreenCoordinatesToBeamPosition(window_x, window_y, &dot, out_line))
+    return false;
+
+  *out_line += m_crtc_state.vertical_active_start;
+  *out_tick = (dot * m_crtc_state.dot_clock_divider) + m_crtc_state.horizontal_active_start;
+  return true;
+}
+
+TickCount GPU::GetSystemTicksUntilDot(u32 dot, u32 line)
+{
+  u32 current_tick_in_line = (GetPendingCRTCTicks() + m_crtc_state.current_tick_in_scanline);
+  const u32 current_line = m_crtc_state.current_scanline +
+                           (current_tick_in_line / m_crtc_state.horizontal_total) % m_crtc_state.vertical_total;
+  current_tick_in_line = current_tick_in_line % m_crtc_state.horizontal_total;
+  const u32 current_dot = current_tick_in_line / m_crtc_state.dot_clock_divider;
+
+  const u32 lines_to_dot =
+    (line >= current_line) ? (line - current_line) : ((m_crtc_state.vertical_total - current_line) + line);
+  const u32 dots_to_dot = (dot >= current_dot) ?
+                            (dot - current_dot) :
+                            ((m_crtc_state.horizontal_total / m_crtc_state.dot_clock_divider) + dot);
+
+  const TickCount ticks_to_dot = static_cast<TickCount>(((lines_to_dot * m_crtc_state.horizontal_total) + dots_to_dot) *
+                                                        m_crtc_state.dot_clock_divider);
+
+  return GPUTicksToSystemTicks(ticks_to_dot);
+}
+
+TickCount GPU::GetSystemTicksUntilTicksAndLine(u32 ticks, u32 line)
+{
+  u32 current_tick = (GetPendingCRTCTicks() + m_crtc_state.current_tick_in_scanline);
+  const u32 current_line =
+    (m_crtc_state.current_scanline + (current_tick / m_crtc_state.horizontal_total)) % m_crtc_state.vertical_total;
+  current_tick = current_tick % m_crtc_state.horizontal_total;
+
+  const u32 lines_to_target =
+    (line >= current_line) ? (line - current_line) : ((m_crtc_state.vertical_total - current_line) + line);
+  const u32 ticks_to_target = (ticks >= current_tick) ? (ticks - current_tick) : (m_crtc_state.horizontal_total + ticks);
+
+  const TickCount total_ticks_to_target =
+    static_cast<TickCount>((lines_to_target * m_crtc_state.horizontal_total) + ticks_to_target);
+
+  return GPUTicksToSystemTicks(total_ticks_to_target);
 }
 
 u32 GPU::ReadGPUREAD()

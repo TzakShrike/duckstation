@@ -198,8 +198,19 @@ public:
   // gpu_sw.cpp
   static std::unique_ptr<GPU> CreateSoftwareRenderer();
 
+  // Converts window coordinates into dots/lines. Returns false if out of range. Used for lightguns.
+  bool ConvertScreenCoordinatesToBeamPosition(s32 window_x, s32 window_y, u32* out_dot, u32* out_line) const;
+
   // Converts window coordinates into horizontal ticks and scanlines. Returns false if out of range. Used for lightguns.
   bool ConvertScreenCoordinatesToBeamTicksAndLines(s32 window_x, s32 window_y, u32* out_tick, u32* out_line) const;
+
+  // Returns the number of system clock ticks until the specified dot/line.
+  TickCount GetSystemTicksUntilDot(u32 dot, u32 line);
+  TickCount GetSystemTicksUntilTicksAndLine(u32 ticks, u32 line);
+
+  // Returns the number of visible lines.
+  ALWAYS_INLINE u16 GetCRTCActiveStartLine() const { return m_crtc_state.vertical_active_start; }
+  ALWAYS_INLINE u16 GetCRTCActiveEndLine() const { return m_crtc_state.vertical_active_end; }
 
   // Returns the video clock frequency.
   TickCount GetCRTCFrequency() const;
