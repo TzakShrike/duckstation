@@ -195,23 +195,23 @@
         <location filename="../../core/analog_controller.cpp" line="59"/>
         <location filename="../../core/analog_controller.cpp" line="169"/>
         <source>Controller %u switched to analog mode.</source>
-        <translation>Controller %u switched to analog mode.</translation>
+        <translation>控制器%u切换为模拟模式。</translation>
     </message>
     <message>
         <location filename="../../core/analog_controller.cpp" line="60"/>
         <location filename="../../core/analog_controller.cpp" line="170"/>
         <source>Controller %u switched to digital mode.</source>
-        <translation>Controller %u switched to digital mode.</translation>
+        <translation>控制器%u切换为数字模式。</translation>
     </message>
     <message>
         <location filename="../../core/analog_controller.cpp" line="104"/>
         <source>Controller %u is locked to analog mode by the game.</source>
-        <translation>Controller %u is locked to analog mode by the game.</translation>
+        <translation>控制器%u被游戏锁定为模拟模式。</translation>
     </message>
     <message>
         <location filename="../../core/analog_controller.cpp" line="106"/>
         <source>Controller %u is locked to digital mode by the game.</source>
-        <translation>Controller %u is locked to digital mode by the game.</translation>
+        <translation>控制器%u被游戏锁定为数字模式。</translation>
     </message>
     <message>
         <location filename="../../core/analog_controller.cpp" line="469"/>
@@ -338,6 +338,11 @@
         <translation>摇杆轴灵敏度</translation>
     </message>
     <message>
+        <location filename="../../core/analog_controller.cpp" line="507"/>
+        <source>Vibration Bias</source>
+        <translation>震动力</translation>
+    </message>
+    <message>
         <location filename="../../core/analog_controller.cpp" line="508"/>
         <source>Sets the analog stick axis scaling factor. A value between 1.30 and 1.40 is recommended when using recent controllers, e.g. DualShock 4, Xbox One Controller.</source>
         <translation>设置模拟摇杆轴灵敏度。使用最新的控制器 (如DualShock 4、Xbox One控制器) 时，建议使用1.30到1.40之间的值。</translation>
@@ -448,8 +453,8 @@
     </message>
     <message>
         <location filename="../audiosettingswidget.cpp" line="46"/>
-        <source>Throttles the emulation speed based on the audio backend pulling audio frames. Sync will automatically be disabled if not running at 100% speed.</source>
-        <translation>根据音频后端拉取音频帧来限制模拟速度。如果没有以100%的速度运行, 同步将自动禁用。</translation>
+        <source>Throttles the emulation speed based on the audio backend pulling audio frames. This helps to remove noises or crackling if emulation is too fast. Sync will automatically be disabled if not running at 100% speed.</source>
+        <translation>根据音频后端拉取音频帧来限制模拟速度。如果模拟速度过快, 这有助于消除噪音或爆音。如果没有以100%的速度运行, 同步将自动禁用。</translation>
     </message>
     <message>
         <location filename="../audiosettingswidget.cpp" line="49"/>
@@ -613,8 +618,8 @@
     </message>
     <message>
         <location filename="../../core/settings.cpp" line="327"/>
-        <source>NTSC-U (US)</source>
-        <translation>NTSC-U (美国)</translation>
+        <source>NTSC-U/C (US, Canada)</source>
+        <translation>NTSC-U (美国, 加拿大)</translation>
     </message>
     <message>
         <location filename="../../core/settings.cpp" line="327"/>
@@ -638,22 +643,6 @@
         <location filename="../consolesettingswidget.ui" line="38"/>
         <source>Region:</source>
         <translation>区域:</translation>
-    </message>
-    <message>
-        <location filename="../consolesettingswidget.ui" line="48"/>
-        <source>BIOS Image Path:</source>
-        <translation>BIOS文件路径:</translation>
-    </message>
-    <message>
-        <location filename="../consolesettingswidget.ui" line="55"/>
-        <location filename="../consolesettingswidget.cpp" line="35"/>
-        <source>Fast Boot</source>
-        <translation>快速启动</translation>
-    </message>
-    <message>
-        <location filename="../consolesettingswidget.ui" line="62"/>
-        <source>Enable TTY Output</source>
-        <translation>启用TTY输出</translation>
     </message>
     <message>
         <location filename="../consolesettingswidget.ui" line="74"/>
@@ -697,11 +686,6 @@
         <translation>不勾选</translation>
     </message>
     <message>
-        <location filename="../consolesettingswidget.cpp" line="36"/>
-        <source>Patches the BIOS to skip the console&apos;s boot animation. Does not work with all games, but usually safe to enabled.</source>
-        <translation>对BIOS应用补丁以跳过主机的启动动画, 不适用于所有游戏, 但通常可以安全启用。</translation>
-    </message>
-    <message>
         <location filename="../consolesettingswidget.cpp" line="39"/>
         <source>Preload Image to RAM</source>
         <translation>将镜像预加载到内存</translation>
@@ -710,11 +694,6 @@
         <location filename="../consolesettingswidget.cpp" line="40"/>
         <source>Loads the game image into RAM. Useful for network paths that may become unreliable during gameplay. In some cases also eliminates stutter when games initiate audio track playback.</source>
         <translation>将游戏镜像加载到内存中。对于可能在游戏过程中变得不可靠的网络路径非常有用。在某些情况下, 当游戏开始播放音轨时也可以消除卡顿。</translation>
-    </message>
-    <message>
-        <location filename="../consolesettingswidget.cpp" line="47"/>
-        <source>Select BIOS Image</source>
-        <translation>选择BIOS文件</translation>
     </message>
 </context>
 <context>
@@ -843,6 +822,10 @@
         <source>No path selected, input profile was not saved.</source>
         <translation>未选择路径, 未保存输入配置文件。</translation>
     </message>
+    <message>
+        <source>Input Profiles (*.ini)</source>
+        <translation>输入配置文件 (*.ini)</translation>
+    </message>
 </context>
 <context>
     <name>ControllerType</name>
@@ -854,7 +837,7 @@
     <message>
         <location filename="../../core/settings.cpp" line="538"/>
         <source>Digital Controller</source>
-        <translation>十字键控制器</translation>
+        <translation>数字控制器</translation>
     </message>
     <message>
         <location filename="../../core/settings.cpp" line="539"/>
@@ -1268,9 +1251,16 @@
         <translation>内部分辨率缩放:</translation>
     </message>
     <message>
-        <location filename="../gpusettingswidget.ui" line="132"/>
         <source>Resolution Scale</source>
         <translation>分辨率缩放</translation>
+    </message>
+    <message>
+        <source>Texture Filtering:</source>
+        <translation>纹理过滤器:</translation>
+    </message>
+    <message>
+        <source>Texture Filtering</source>
+        <translation>纹理过滤器</translation>
     </message>
     <message>
         <location filename="../gpusettingswidget.ui" line="142"/>
@@ -1299,7 +1289,7 @@
         <location filename="../gpusettingswidget.ui" line="163"/>
         <location filename="../gpusettingswidget.cpp" line="118"/>
         <source>Force NTSC Timings (60hz-on-PAL)</source>
-        <translation>强制NTSC制式(60hz-PAL)</translation>
+        <translation>强制NTSC制式 (60hz-PAL)</translation>
     </message>
     <message>
         <location filename="../gpusettingswidget.ui" line="170"/>
@@ -1310,8 +1300,8 @@
     <message>
         <location filename="../gpusettingswidget.ui" line="177"/>
         <location filename="../gpusettingswidget.cpp" line="128"/>
-        <source>Widescreen Hack</source>
-        <translation>宽屏补丁</translation>
+        <source>Widescreen Hack (render 3D in 16:9)</source>
+        <translation>宽屏补丁 (在16比9中渲染3D)</translation>
     </message>
     <message>
         <location filename="../gpusettingswidget.ui" line="187"/>
@@ -1722,13 +1712,8 @@ This will download approximately 4 megabytes over your current internet connecti
     </message>
     <message>
         <location filename="../gamepropertiesdialog.ui" line="193"/>
-        <source>GPU Settings</source>
-        <translation>GPU设置</translation>
-    </message>
-    <message>
-        <location filename="../gamepropertiesdialog.ui" line="199"/>
-        <source>Crop Mode:</source>
-        <translation>裁剪模式:</translation>
+        <source>GPU Screen Display</source>
+        <translation>GPU屏幕显示</translation>
     </message>
     <message>
         <location filename="../gamepropertiesdialog.ui" line="209"/>
@@ -1736,9 +1721,53 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>高宽比:</translation>
     </message>
     <message>
-        <location filename="../gamepropertiesdialog.ui" line="219"/>
+        <location filename="../gamepropertiesdialog.ui" line="199"/>
+        <source>Crop Mode:</source>
+        <translation>裁剪模式:</translation>
+    </message>
+    <message>
+        <source>Linear Upscaling</source>
+        <translation>线性放大</translation>
+    </message>
+    <message>
+        <source>Integer Upscaling</source>
+        <translation>整数放大</translation>
+    </message>
+    <message>
+        <source>GPU Enhancements</source>
+        <translation>GPU增强</translation>
+    </message>
+    <message>
+        <source>Resolution Scale:</source>
+        <translation>分辨率缩放:</translation>
+    </message>
+    <message>
+        <source>Texture Filtering:</source>
+        <translation>纹理过滤器:</translation>
+    </message>
+    <message>
+        <source>True Color Rendering (24-bit, disables dithering)</source>
+        <translation>真彩色渲染 (24位, 禁用色彩抖动)</translation>
+    </message>
+    <message>
+        <source>Scaled Dithering (scale dither pattern to resolution)</source>
+        <translation>缩放色彩抖动 (按分辨率缩放模式)</translation>
+    </message>
+    <message>
+        <source>Force NTSC Timings (60hz-on-PAL)</source>
+        <translation>强制NTSC制式 (60hz-PAL)</translation>
+    </message>
+    <message>
+        <source>Bilinear Texture Filtering</source>
+        <translation>双线性纹理过滤</translation>
+    </message>
+    <message>
         <source>Widescreen Hack</source>
         <translation>宽屏补丁</translation>
+    </message>
+    <message>
+        <source>PGXP Geometry Correction</source>
+        <translation>PGXP 几何校正</translation>
     </message>
     <message>
         <location filename="../gamepropertiesdialog.ui" line="232"/>
@@ -1754,6 +1783,30 @@ This will download approximately 4 megabytes over your current internet connecti
         <location filename="../gamepropertiesdialog.ui" line="248"/>
         <source>Controller 2 Type:</source>
         <translation>控制器2类型:</translation>
+    </message>
+    <message>
+        <source>Memory Card Settings</source>
+        <translation>记忆卡设置</translation>
+    </message>
+    <message>
+        <source>Memory Card 1 Type:</source>
+        <translation>记忆卡1类型:</translation>
+    </message>
+    <message>
+        <source>Memory Card 1 Shared Path:</source>
+        <translation>共用记忆卡1路径:</translation>
+    </message>
+    <message>
+        <source>Memory Card 2 Type:</source>
+        <translation>记忆卡2类型:</translation>
+    </message>
+    <message>
+        <source>Memory Card 2 Shared Path:</source>
+        <translation>共用记忆卡2路径:</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览...</translation>
     </message>
     <message>
         <location filename="../gamepropertiesdialog.ui" line="275"/>
@@ -1847,6 +1900,10 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>强制软件渲染</translation>
     </message>
     <message>
+        <source>Force Interlacing</source>
+        <translation>强制交错</translation>
+    </message>
+    <message>
         <location filename="../../core/game_settings.cpp" line="24"/>
         <source>Enable Interlacing</source>
         <translation>启用交错</translation>
@@ -1867,6 +1924,10 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>禁用缩放抖动</translation>
     </message>
     <message>
+        <source>Disallow Forcing NTSC Timings</source>
+        <translation>不允许强制NTSC计时</translation>
+    </message>
+    <message>
         <location filename="../../core/game_settings.cpp" line="28"/>
         <source>Disable Widescreen</source>
         <translation>禁用宽屏</translation>
@@ -1882,24 +1943,28 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>禁用 PGXP 剔除</translation>
     </message>
     <message>
-        <location filename="../../core/game_settings.cpp" line="31"/>
-        <source>Enable PGXP Vertex Cache</source>
-        <translation>启用 PGXP 顶点缓存</translation>
+        <source>Disable PGXP Texture Correction</source>
+        <translation>禁用 PGXP 纹理校正</translation>
     </message>
     <message>
-        <location filename="../../core/game_settings.cpp" line="32"/>
-        <source>Enable PGXP CPU Mode</source>
-        <translation>启用 PGXP CPU 模式</translation>
+        <source>Force PGXP Vertex Cache</source>
+        <translation>强制 PGXP 顶点缓存</translation>
     </message>
     <message>
-        <location filename="../../core/game_settings.cpp" line="33"/>
+        <source>Force PGXP CPU Mode</source>
+        <translation>强制 PGXP CPU 模式</translation>
+    </message>
+    <message>
         <source>Force Digital Controller</source>
-        <translation>强制十字键控制器</translation>
+        <translation>强制数字控制器</translation>
     </message>
     <message>
-        <location filename="../../core/game_settings.cpp" line="34"/>
-        <source>Enable Recompiler Memory Exceptions</source>
-        <translation>启用重新编译内存异常</translation>
+        <source>Force Recompiler Memory Exceptions</source>
+        <translation>强制重新编译内存异常</translation>
+    </message>
+    <message>
+        <source>Force Recompiler ICache</source>
+        <translation>强制重新编译I缓存</translation>
     </message>
 </context>
 <context>
@@ -1907,7 +1972,7 @@ This will download approximately 4 megabytes over your current internet connecti
     <message>
         <location filename="../generalsettingswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../generalsettingswidget.ui" line="32"/>
@@ -1957,6 +2022,7 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>每个游戏单独应用设置</translation>
     </message>
     <message>
+        <location filename="../generalsettingswidget.ui" line="87"/>
         <source>Automatically Load Cheats</source>
         <translation>自动载入金手指</translation>
     </message>
@@ -2161,6 +2227,16 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>降低分辨率比例</translation>
     </message>
     <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="1450"/>
+        <source>Toggle Post-Processing</source>
+        <translation>切换后处理</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="1456"/>
+        <source>Reload Post Processing Shaders</source>
+        <translation>重新加载后处理着色器</translation>
+    </message>
+    <message>
         <location filename="../../frontend-common/common_host_interface.cpp" line="1383"/>
         <source>Load From Selected Slot</source>
         <translation>从所选插槽读取</translation>
@@ -2349,6 +2425,7 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>从播放列表...</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="60"/>
         <source>Cheats</source>
         <translation>金手指</translation>
     </message>
@@ -2406,6 +2483,18 @@ This will download approximately 4 megabytes over your current internet connecti
         <location filename="../mainwindow.ui" line="164"/>
         <source>toolBar</source>
         <translation>工具栏</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation>工具(&amp;T)</translation>
+    </message>
+    <message>
+        <source>Memory &amp;Card Editor</source>
+        <translation>记忆卡管理器(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Open Data Directory...</source>
+        <translation>打开模拟器数据目录...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="203"/>
@@ -2473,9 +2562,23 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>快捷键设置(&amp;H)...</translation>
     </message>
     <message>
+        <source>&amp;GPU Settings...</source>
+        <translation type="vanished">GPU设置</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="319"/>
         <source>&amp;Display Settings...</source>
         <translation>显示设置(&amp;D)...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="360"/>
+        <source>&amp;Enhancement Settings...</source>
+        <translation>增强设置(&amp;E)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="369"/>
+        <source>&amp;Post-Processing Settings...</source>
+        <translation>后处理设置(&amp;P)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="328"/>
@@ -2528,10 +2631,6 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>音频设置...</translation>
     </message>
     <message>
-        <source>&amp;Enhancement Settings...</source>
-        <translation>增强设置(&amp;E)</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="385"/>
         <source>Game List Settings...</source>
         <translation>游戏列表设置...</translation>
@@ -2540,6 +2639,10 @@ This will download approximately 4 megabytes over your current internet connecti
         <location filename="../mainwindow.ui" line="394"/>
         <source>General Settings...</source>
         <translation>常规设置...</translation>
+    </message>
+    <message>
+        <source>B&amp;IOS Settings...</source>
+        <translation>BIOS设置(&amp;I)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="403"/>
@@ -2662,8 +2765,28 @@ This will download approximately 4 megabytes over your current internet connecti
     </message>
     <message>
         <location filename="../mainwindow.ui" line="598"/>
-        <source>&amp;Game List</source>
-        <translation>游戏列表(&amp;G)</translation>
+        <source>Game &amp;List</source>
+        <translation>游戏列表(&amp;L)</translation>
+    </message>
+    <message>
+        <source>Game &amp;Grid</source>
+        <translation>游戏方格(&amp;G)</translation>
+    </message>
+    <message>
+        <source>Show Titles (Grid View)</source>
+        <translation>显示标题 (方格样式)</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out (Grid View)</source>
+        <translation>缩小 (方格样式)</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;In (Grid View)</source>
+        <translation>放大 (方格样式)</translation>
+    </message>
+    <message>
+        <source>Refresh &amp;Covers (Grid View)</source>
+        <translation>刷新 (方格样式)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="606"/>
@@ -2738,6 +2861,18 @@ This will download approximately 4 megabytes over your current internet connecti
         <location filename="../mainwindow.cpp" line="660"/>
         <source>Default</source>
         <translation>默认</translation>
+    </message>
+    <message>
+        <source>Fusion</source>
+        <translation>Fusion</translation>
+    </message>
+    <message>
+        <source>Dark Fusion (Gray)</source>
+        <translation>Dark Fusion (灰色)</translation>
+    </message>
+    <message>
+        <source>Dark Fusion (Blue)</source>
+        <translation>Dark Fusion (蓝色)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="661"/>
@@ -2908,6 +3043,13 @@ This will download approximately 4 megabytes over your current internet connecti
         <translation>PGXP CPU模式与重新编译器不兼容, 改为使用缓存解释器。</translation>
     </message>
     <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="698"/>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="1989"/>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2306"/>
+        <source>Failed to load post processing shader chain.</source>
+        <translation>加载后处理着色器链失败。</translation>
+    </message>
+    <message>
         <location filename="../../frontend-common/common_host_interface.cpp" line="1282"/>
         <source>Speed limiter enabled.</source>
         <translation>限速器启用。</translation>
@@ -2944,6 +3086,298 @@ This will download approximately 4 megabytes over your current internet connecti
         <source>Screenshot saved to &apos;%s&apos;.</source>
         <translation>截图已保存到&apos;%s&apos;.</translation>
     </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2207"/>
+        <source>Failed to load cheats from &apos;%s&apos;.</source>
+        <translation>无法加载&apos;%s&apos;金手指。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2211"/>
+        <source>Loaded %u cheats from list. %u cheats are enabled.</source>
+        <translation>从列表加载%u金手指, 金手指%u已启用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2234"/>
+        <source>Saved %u cheats to &apos;%s&apos;.</source>
+        <translation>保存%u金手指到&apos;%s&apos;。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2256"/>
+        <source>Cheat &apos;%s&apos; enabled.</source>
+        <translation>金手指&apos;%s&apos;已启用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2260"/>
+        <source>Cheat &apos;%s&apos; disabled.</source>
+        <translation>金手指&apos;%s&apos;已禁用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2270"/>
+        <source>Failed to save cheat list to &apos;%s&apos;</source>
+        <translation>无法保存金手指列表到&apos;%s&apos;</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2286"/>
+        <source>Applied cheat &apos;%s&apos;.</source>
+        <translation>应用金手指&apos;%s&apos;。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2290"/>
+        <source>Cheat &apos;%s&apos; is already enabled.</source>
+        <translation>金手指&apos;%s&apos;已启用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2303"/>
+        <source>Post-processing is now enabled.</source>
+        <translation>后处理现在已启用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2310"/>
+        <source>Post-processing is now disabled.</source>
+        <translation>后处理现在已禁用。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2321"/>
+        <source>Failed to load post-processing shader chain.</source>
+        <translation>无法加载后处理链。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/common_host_interface.cpp" line="2323"/>
+        <source>Post-processing shaders reloaded.</source>
+        <translation>重新加载后处理着色器。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="438"/>
+        <source>CPU interpreter forced by game settings.</source>
+        <translation>根据游戏设置强制CPU解释器。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="449"/>
+        <source>Software renderer forced by game settings.</source>
+        <translation>根据游戏设置强制软件渲染器。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="460"/>
+        <source>Interlacing forced by game settings.</source>
+        <translation>根据游戏设置强制隔行扫描。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="471"/>
+        <source>True color disabled by game settings.</source>
+        <translation>根据游戏设置禁用真彩色。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="482"/>
+        <source>Upscaling disabled by game settings.</source>
+        <translation>根据游戏设置禁用放大。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="493"/>
+        <source>Scaled dithering disabled by game settings.</source>
+        <translation>根据游戏设置禁用缩放着色器。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="506"/>
+        <source>Widescreen disabled by game settings.</source>
+        <translation>根据游戏设置禁用宽屏。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="518"/>
+        <source>Forcing NTSC Timings disallowed by game settings.</source>
+        <translation>根据游戏设置不允许强制NTSC计时器。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="530"/>
+        <source>PGXP geometry correction disabled by game settings.</source>
+        <translation>根据游戏设置禁用PGXP几何校正。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="542"/>
+        <source>PGXP culling disabled by game settings.</source>
+        <translation>根据游戏设置禁用PGXP剔除。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="553"/>
+        <source>PGXP texture correction disabled by game settings.</source>
+        <translation>根据游戏设置禁用纹理校正。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="565"/>
+        <source>PGXP vertex cache forced by game settings.</source>
+        <translation>根据游戏设置强制PGXP顶点缓存。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="576"/>
+        <source>PGXP CPU mode forced by game settings.</source>
+        <translation>根据游戏设置强制PGXP CPU模式。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="593"/>
+        <source>Controller %u changed to digital by game settings.</source>
+        <translation>根据游戏设置控制%u改为数字模式。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="608"/>
+        <source>Recompiler memory exceptions forced by game settings.</source>
+        <translation>根据游戏设置强制重编译内存异常。</translation>
+    </message>
+    <message>
+        <location filename="../../frontend-common/game_settings.cpp" line="621"/>
+        <source>Recompiler ICache forced by game settings.</source>
+        <translation>根据游戏设置强制重编译I缓存。</translation>
+    </message>
+</context>
+<context>
+    <name>PostProcessingChainConfigWidget</name>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="20"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="50"/>
+        <source>Add</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="70"/>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="90"/>
+        <source>Clear</source>
+        <translation>清空</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="110"/>
+        <source>Move Up</source>
+        <translation>上移</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="130"/>
+        <source>Move Down</source>
+        <translation>下移</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.ui" line="150"/>
+        <source>Options...</source>
+        <translation>选项...</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.cpp" line="115"/>
+        <source>No Shaders Available</source>
+        <translation>无可用着色器</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.cpp" line="127"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.cpp" line="127"/>
+        <source>Failed to add shader. The log may contain more information.</source>
+        <translation>无法添加着色器, 日志中可能包含更多信息。</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.cpp" line="159"/>
+        <source>Question</source>
+        <translation>提问</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingchainconfigwidget.cpp" line="159"/>
+        <source>Are you sure you want to clear all shader stages?</source>
+        <translation>确定要清空着色器吗?</translation>
+    </message>
+</context>
+<context>
+    <name>PostProcessingSettingsWidget</name>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="34"/>
+        <source>Enable Post Processing</source>
+        <translation>启用后处理</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="54"/>
+        <source>&amp;Reload Shaders</source>
+        <translation>重新载入着色器(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="65"/>
+        <source>Load Preset</source>
+        <translation>载入预置</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="76"/>
+        <source>Save Preset</source>
+        <translation>保存预置</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.ui" line="89"/>
+        <source>Post Processing Chain</source>
+        <translation>后处理链</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.cpp" line="26"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingsettingswidget.cpp" line="27"/>
+        <source>The current post-processing chain is invalid, it has been reset. Any changes made will overwrite the existing config.</source>
+        <translation>当前后处理链无效, 已重置。任何修改将会覆写已存在的配置。</translation>
+    </message>
+</context>
+<context>
+    <name>PostProcessingShaderConfigDialog</name>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="147"/>
+        <source>%1 Shader Options</source>
+        <translation>%1着色器选项</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="157"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+</context>
+<context>
+    <name>PostProcessingShaderConfigWidget</name>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="55"/>
+        <source>Red</source>
+        <translation>红</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="55"/>
+        <source>Green</source>
+        <translation>绿</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="55"/>
+        <source>Blue</source>
+        <translation>蓝</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="55"/>
+        <source>Alpha</source>
+        <translation>Alpha</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="56"/>
+        <source>%1 (%2)</source>
+        <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../postprocessingshaderconfigwidget.cpp" line="132"/>
+        <source>Reset to Defaults</source>
+        <translation>重置为默认</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2967,9 +3401,7 @@ This will download approximately 4 megabytes over your current internet connecti
         <source>Failed to open URL.
 
 The URL was: %1</source>
-        <translation>无法打开URL
-
-URL: %1</translation>
+        <translation>无法打开URL, URL: %1</translation>
     </message>
 </context>
 <context>
@@ -3034,9 +3466,39 @@ URL: %1</translation>
         <source>Are you sure you want to delete all save states for %1?
 
 The saves will not be recoverable.</source>
-        <translation>确定要删除%1的所有即时存档吗？
-
-即时存档将无法恢复。</translation>
+        <translation>确定要删除%1的所有即时存档吗？即时存档将无法恢复。</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="960"/>
+        <source>&amp;Load Cheats...</source>
+        <translation>载入金手指(&amp;C)...</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="962"/>
+        <location filename="../qthostinterface.cpp" line="971"/>
+        <source>Select Cheat File</source>
+        <translation>选择金手指文件</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="963"/>
+        <location filename="../qthostinterface.cpp" line="972"/>
+        <source>PCSXR/Libretro Cheat Files (*.cht);;All Files (*.*)</source>
+        <translation>PCSXR/Libretro金手指文件 (*.cht);;所有文件 (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="968"/>
+        <source>&amp;Save Cheats...</source>
+        <translation>保存金手指(&amp;S)...</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="977"/>
+        <source>&amp;Enabled Cheats</source>
+        <translation>启用金手指(&amp;H)</translation>
+    </message>
+    <message>
+        <location filename="../qthostinterface.cpp" line="979"/>
+        <source>&amp;Apply Cheats</source>
+        <translation>应用金手指(&amp;A)</translation>
     </message>
 </context>
 <context>
@@ -3080,6 +3542,10 @@ The saves will not be recoverable.</source>
         <translation>常规设置</translation>
     </message>
     <message>
+        <source>BIOS Settings</source>
+        <translation>BIOS设置</translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.ui" line="72"/>
         <source>Console Settings</source>
         <translation>主机设置</translation>
@@ -3111,12 +3577,22 @@ The saves will not be recoverable.</source>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="126"/>
-        <source>Audio Settings</source>
-        <translation>音频设置</translation>
-    </message>
-    <message>
         <source>Enhancement Settings</source>
         <translation>增强设置</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="135"/>
+        <source>Post-Processing Settings</source>
+        <translation>后处理设置</translation>
+    </message>
+    <message>
+        <source>GPU Settings</source>
+        <translation type="vanished">GPU设置</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="135"/>
+        <source>Audio Settings</source>
+        <translation>音频设置</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="135"/>
@@ -3161,7 +3637,16 @@ The saves will not be recoverable.</source>
     <message>
         <location filename="../settingsdialog.cpp" line="83"/>
         <source>&lt;strong&gt;Enhancement Settings&lt;/strong&gt;&lt;hr&gt;These options control enhancements which can improve visuals compared to the original console. Mouse over each option for additional information.</source>
-        <translation>&lt;strong&gt;增强设置&lt;/strong&gt;&lt;hr&gt;这些选项控制增强功能，与原来的控制台相比, 这些功能可以改善视觉效果。将鼠标悬停在每个选项上以获取其他信息。</translation>
+        <translation>&lt;strong&gt;增强设置&lt;/strong&gt;&lt;hr&gt;这些选项控制增强功能, 与原来的控制台相比, 这些功能可以改善视觉效果。将鼠标悬停在每个选项上以获取其他信息。</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>&lt;strong&gt;Post-Processing Settings&lt;/strong&gt;&lt;hr&gt;Post processing allows you to alter the appearance of the image displayed on the screen with various filters. Shaders will be executed in sequence.</source>
+        <translation>&lt;strong&gt;后处理设置&lt;/strong&gt;&lt;hr&gt;后处理允许您使用各种过滤器改变屏幕上显示的图像的外观。着色器将按顺序执行。</translation>
+    </message>
+    <message>
+        <source>&lt;strong&gt;GPU Settings&lt;/strong&gt;&lt;hr&gt;These options control the simulation of the GPU in the console. Various enhancements are available, mouse over each for additional information.</source>
+        <translation type="vanished">&lt;strong&gt;GPU设置&lt;/strong&gt;&lt;hr&gt;这些选项控制控制台中GPU的模拟。提供了各种增强功能, 将鼠标悬停在每个功能上可获得更多信息。</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="86"/>
@@ -3210,6 +3695,181 @@ The saves will not be recoverable.</source>
         <location filename="../../core/system.cpp" line="1266"/>
         <source>Game changed, reloading memory cards.</source>
         <translation>游戏已改变, 重新加载存储卡。</translation>
+    </message>
+</context>
+<context>
+    <name>MemoryCardEditorDialog</name>
+    <message>
+        <source>Memory Card Editor</source>
+        <translation>记忆卡管理器</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>格</translation>
+    </message>
+    <message>
+        <source>Memory Card:</source>
+        <translation>记忆卡:</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <source>All Memory Card Types (*.mcd *.mcr *.mc)</source>
+        <translation>所有记忆卡类型 (*.mcd *.mcr *.mc)</translation>
+    </message>
+    <message>
+        <source>New...</source>
+        <translation>新建...</translation>
+    </message>
+    <message>
+        <source>0 blocks used</source>
+        <translation>已使用0格</translation>
+    </message>
+    <message>
+        <source>%1 blocks free%2</source>
+        <translation>剩余%1格%2</translation>
+    </message>
+    <message>
+        <source>Import File...</source>
+        <translation>导入文件...</translation>
+    </message>
+    <message>
+        <source>Import Card...</source>
+        <translation>导入记忆卡...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Delete File</source>
+        <translation>删除文件</translation>
+    </message>
+    <message>
+        <source>Export File</source>
+        <translation>导出文件</translation>
+    </message>
+    <message>
+        <source>&lt;&lt;</source>
+        <translation>&lt;&lt;复制</translation>
+    </message>
+    <message>
+        <source>&gt;&gt;</source>
+        <translation>复制&gt;&gt;</translation>
+    </message>
+    <message>
+        <source>Select Memory Card</source>
+        <translation>选择记忆卡</translation>
+    </message>
+    <message>
+        <source>Failed to load memory card image.</source>
+        <translation>无法读取记忆卡文件。</translation>
+    </message>
+    <message>
+        <source>Memory card '%1' is not saved, do you want to save before closing?</source>
+        <translation>记忆卡'%1'未保存, 在关闭前要保存吗?</translation>
+    </message>
+    <message>
+        <source>Save memory card?</source>
+        <translation>保存记忆卡?</translation>
+    </message>
+    <message>
+        <source>Failed to write card to '%1'</source>
+        <translation>无法将记忆卡写入到'%1'</translation>
+    </message>
+    <message>
+        <source>Failed to write file %1</source>
+        <translation>无法将文件写入到'%1'</translation>
+    </message>
+    <message>
+        <source>Insufficient blocks, this file needs %1 but only %2 are available.</source>
+        <translation>空间不足, 此文件需要%1格, 但只有%2格可用。</translation>
+    </message>
+</context>
+<context>
+	<name>BIOSSettingsWidget</name>
+    <message>
+        <source>BIOS Selection</source>
+        <translation>BIOS选择</translation>
+    </message>
+    <message>
+        <source>Auto-Detect</source>
+        <translation>自动检测</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>未知</translation>
+    </message>
+    <message>
+        <source>NTSC-J (Japan):</source>
+        <translation>NTSC-J (日本):</translation>
+    </message>
+    <message>
+        <source>NTSC-U/C (US/Canada):</source>
+        <translation>NTSC-U/C (美国/加拿大):</translation>
+    </message>
+    <message>
+        <source>PAL (Europe, Australia):</source>
+        <translation>PAL (欧洲, 澳大利亚):</translation>
+    </message>
+    <message>
+        <source>Open in Explorer...</source>
+        <translation>打开所在目录</translation>
+    </message>
+    <message>
+        <source>Refresh List</source>
+        <translation>刷新列表</translation>
+    </message>
+    <message>
+        <source>BIOS Directory</source>
+        <translation>BIOS路径</translation>
+    </message>
+    <message>
+        <source>DuckStation will search for BIOS images in this directory.</source>
+        <translation>DuckStation将在此目录中搜索BIOS文件。</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <source>Options and Patches</source>
+        <translation>选项和补丁</translation>
+    </message>
+    <message>
+        <location filename="../consolesettingswidget.ui" line="55"/>
+        <location filename="../consolesettingswidget.cpp" line="35"/>
+        <source>Fast Boot</source>
+        <translation>快速启动</translation>
+    </message>
+    <message>
+        <location filename="../consolesettingswidget.ui" line="62"/>
+        <source>Enable TTY Output</source>
+        <translation>启用TTY输出</translation>
+    </message>
+    <message>
+        <location filename="../consolesettingswidget.ui" line="74"/>
+        <source>...</source>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <location filename="../consolesettingswidget.cpp" line="36"/>
+        <source>Patches the BIOS to skip the console&apos;s boot animation. Does not work with all games, but usually safe to enabled.</source>
+        <translation>对BIOS应用补丁以跳过主机的启动动画, 不适用于所有游戏, 但通常可以安全启用。</translation>
+    </message>
+    <message>
+        <source>Unchecked</source>
+        <translation>不勾选</translation>
     </message>
 </context>
 </TS>

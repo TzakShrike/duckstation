@@ -44,7 +44,7 @@ Log_SetChannel(QtHostInterface);
 
 QtHostInterface::QtHostInterface(QObject* parent) : QObject(parent), CommonHostInterface()
 {
-  qRegisterMetaType<SystemBootParameters>();
+  qRegisterMetaType<std::shared_ptr<const SystemBootParameters>>();
 }
 
 QtHostInterface::~QtHostInterface()
@@ -66,6 +66,7 @@ std::vector<std::pair<QString, QString>> QtHostInterface::getAvailableLanguageLi
           {QStringLiteral("Italiano"), QStringLiteral("it")},
           {QStringLiteral("Português (Pt)"), QStringLiteral("pt-pt")},
           {QStringLiteral("Português (Br)"), QStringLiteral("pt-br")},
+          {QStringLiteral("Русский"), QStringLiteral("ru")},
           {QStringLiteral("简体中文"), QStringLiteral("zh-cn")}};
 }
 
@@ -144,7 +145,7 @@ void QtHostInterface::ReportError(const char* message)
   if (was_fullscreen)
     SetFullscreen(false);
 
-  emit errorReported(QString::fromLocal8Bit(message));
+  emit errorReported(QString::fromUtf8(message));
 
   if (was_fullscreen)
     SetFullscreen(true);
@@ -154,7 +155,7 @@ void QtHostInterface::ReportMessage(const char* message)
 {
   HostInterface::ReportMessage(message);
 
-  emit messageReported(QString::fromLocal8Bit(message));
+  emit messageReported(QString::fromUtf8(message));
 }
 
 bool QtHostInterface::ConfirmMessage(const char* message)
@@ -163,18 +164,12 @@ bool QtHostInterface::ConfirmMessage(const char* message)
   if (was_fullscreen)
     SetFullscreen(false);
 
-  const bool result = messageConfirmed(QString::fromLocal8Bit(message));
+  const bool result = messageConfirmed(QString::fromUtf8(message));
 
   if (was_fullscreen)
     SetFullscreen(true);
 
   return result;
-}
-
-bool QtHostInterface::parseCommandLineParameters(int argc, char* argv[],
-                                                 std::unique_ptr<SystemBootParameters>* out_boot_params)
-{
-  return CommonHostInterface::ParseCommandLineParameters(argc, argv, out_boot_params);
 }
 
 std::string QtHostInterface::GetStringSettingValue(const char* section, const char* key,
@@ -344,16 +339,17 @@ void QtHostInterface::setMainWindow(MainWindow* window)
   m_main_window = window;
 }
 
-void QtHostInterface::bootSystem(const SystemBootParameters& params)
+void QtHostInterface::bootSystem(std::shared_ptr<const SystemBootParameters> params)
 {
   if (!isOnWorkerThread())
   {
-    QMetaObject::invokeMethod(this, "bootSystem", Qt::QueuedConnection, Q_ARG(const SystemBootParameters&, params));
+    QMetaObject::invokeMethod(this, "bootSystem", Qt::QueuedConnection,
+                              Q_ARG(std::shared_ptr<const SystemBootParameters>, std::move(params)));
     return;
   }
 
   emit emulationStarting();
-  BootSystem(params);
+  BootSystem(*params);
 }
 
 void QtHostInterface::resumeSystemFromState(const QString& filename, bool boot_on_failure)
@@ -1024,7 +1020,7 @@ void QtHostInterface::setCheatEnabled(quint32 index, bool enabled)
   SetCheatCodeState(index, enabled, g_settings.auto_load_cheats);
 }
 
-void QtHostInterface::applyCheat(u32 index)
+void QtHostInterface::applyCheat(quint32 index)
 {
   if (!isOnWorkerThread())
   {
@@ -1033,6 +1029,17 @@ void QtHostInterface::applyCheat(u32 index)
   }
 
   ApplyCheatCode(index);
+}
+
+void QtHostInterface::reloadPostProcessingShaders()
+{
+  if (!isOnWorkerThread())
+  {
+    QMetaObject::invokeMethod(this, "reloadPostProcessingShaders", Qt::QueuedConnection);
+    return;
+  }
+
+  ReloadPostProcessingShaders();
 }
 
 void QtHostInterface::loadState(const QString& filename)
@@ -1306,6 +1313,12 @@ static bool AddImGuiFont(const std::string& language, float size, float framebuf
   {
     path = GetFontPath("msgothic.ttc");
     range = ImGui::GetIO().Fonts->GetGlyphRangesJapanese();
+  }
+  else if (language == "ru")
+  {
+    path = GetFontPath("segoeui.ttf");
+    range = ImGui::GetIO().Fonts->GetGlyphRangesCyrillic();
+    size *= 1.15f;
   }
   else if (language == "zh-cn")
   {

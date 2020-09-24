@@ -9,6 +9,8 @@
 class SettingsInterface
 {
 public:
+  virtual ~SettingsInterface();
+
   virtual void Clear() = 0;
 
   virtual int GetIntValue(const char* section, const char* key, int default_value = 0) = 0;
@@ -84,6 +86,7 @@ struct Settings
 
   GPURenderer gpu_renderer = GPURenderer::Software;
   std::string gpu_adapter;
+  std::string display_post_process_chain;
   u32 gpu_resolution_scale = 1;
   bool gpu_use_debug_device = false;
   bool gpu_true_color = true;
@@ -103,6 +106,7 @@ struct Settings
   DisplayAspectRatio display_aspect_ratio = DisplayAspectRatio::R4_3;
   bool display_linear_filtering = true;
   bool display_integer_scaling = false;
+  bool display_post_processing = false;
   bool display_show_osd_messages = false;
   bool display_show_fps = false;
   bool display_show_vps = false;
@@ -143,7 +147,6 @@ struct Settings
 
   // TODO: Controllers, memory cards, etc.
 
-  std::string bios_path;
   bool bios_patch_tty_enable = false;
   bool bios_patch_fast_boot = false;
 

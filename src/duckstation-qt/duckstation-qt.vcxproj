@@ -39,6 +39,7 @@
     <ClCompile Include="advancedsettingswidget.cpp" />
     <ClCompile Include="audiosettingswidget.cpp" />
     <ClCompile Include="autoupdaterdialog.cpp" />
+    <ClCompile Include="biossettingswidget.cpp" />
     <ClCompile Include="consolesettingswidget.cpp" />
     <ClCompile Include="enhancementsettingswidget.cpp" />
     <ClCompile Include="gamelistmodel.cpp" />
@@ -56,6 +57,10 @@
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="controllersettingswidget.cpp" />
     <ClCompile Include="memorycardsettingswidget.cpp" />
+    <ClCompile Include="memorycardeditordialog.cpp" />
+    <ClCompile Include="postprocessingchainconfigwidget.cpp" />
+    <ClCompile Include="postprocessingshaderconfigwidget.cpp" />
+    <ClCompile Include="postprocessingsettingswidget.cpp" />
     <ClCompile Include="qthostinterface.cpp" />
     <ClCompile Include="qtprogresscallback.cpp" />
     <ClCompile Include="qtutils.cpp" />
@@ -64,9 +69,11 @@
   <ItemGroup>
     <QtMoc Include="aboutdialog.h" />
     <QtMoc Include="audiosettingswidget.h" />
+    <QtMoc Include="biossettingswidget.h" />
     <QtMoc Include="controllersettingswidget.h" />
     <QtMoc Include="enhancementsettingswidget.h" />
     <QtMoc Include="memorycardsettingswidget.h" />
+    <QtMoc Include="memorycardeditordialog.h" />
     <QtMoc Include="qtdisplaywidget.h" />
     <QtMoc Include="generalsettingswidget.h" />
     <QtMoc Include="displaysettingswidget.h" />
@@ -84,6 +91,9 @@
     <QtMoc Include="gamelistsettingswidget.h" />
     <QtMoc Include="gamelistwidget.h" />
     <QtMoc Include="gamepropertiesdialog.h" />
+    <QtMoc Include="postprocessingchainconfigwidget.h" />
+    <QtMoc Include="postprocessingshaderconfigwidget.h" />
+    <QtMoc Include="postprocessingsettingswidget.h" />
     <QtMoc Include="mainwindow.h" />
     <QtMoc Include="qthostinterface.h" />
     <ClInclude Include="qtutils.h" />
@@ -116,6 +126,9 @@
     <QtUi Include="audiosettingswidget.ui">
       <FileType>Document</FileType>
     </QtUi>
+    <QtUi Include="biossettingswidget.ui">
+      <FileType>Document</FileType>
+    </QtUi>
     <QtUi Include="consolesettingswidget.ui">
       <FileType>Document</FileType>
     </QtUi>
@@ -143,6 +156,15 @@
     <QtUi Include="gamepropertiesdialog.ui">
       <FileType>Document</FileType>
     </QtUi>
+    <QtUi Include="postprocessingchainconfigwidget.ui">
+      <FileType>Document</FileType>
+    </QtUi>
+    <QtUi Include="postprocessingsettingswidget.ui">
+      <FileType>Document</FileType>
+    </QtUi>
+    <QtUi Include="memorycardeditordialog.ui">
+      <FileType>Document</FileType>
+    </QtUi>
   </ItemGroup>
   <ItemGroup>
     <QtResource Include="resources\resources.qrc">
@@ -154,6 +176,7 @@
     <ClCompile Include="$(IntDir)moc_audiosettingswidget.cpp" />
     <ClCompile Include="$(IntDir)moc_autoupdaterdialog.cpp" />
     <ClCompile Include="$(IntDir)moc_advancedsettingswidget.cpp" />
+    <ClCompile Include="$(IntDir)moc_biossettingswidget.cpp" />
     <ClCompile Include="$(IntDir)moc_consolesettingswidget.cpp" />
     <ClCompile Include="$(IntDir)moc_controllersettingswidget.cpp" />
     <ClCompile Include="$(IntDir)moc_enhancementsettingswidget.cpp" />
@@ -169,6 +192,10 @@
     <ClCompile Include="$(IntDir)moc_inputbindingwidgets.cpp" />
     <ClCompile Include="$(IntDir)moc_mainwindow.cpp" />
     <ClCompile Include="$(IntDir)moc_memorycardsettingswidget.cpp" />
+    <ClCompile Include="$(IntDir)moc_memorycardeditordialog.cpp" />
+    <ClCompile Include="$(IntDir)moc_postprocessingchainconfigwidget.cpp" />
+    <ClCompile Include="$(IntDir)moc_postprocessingshaderconfigwidget.cpp" />
+    <ClCompile Include="$(IntDir)moc_postprocessingsettingswidget.cpp" />
     <ClCompile Include="$(IntDir)moc_qtdisplaywidget.cpp" />
     <ClCompile Include="$(IntDir)moc_qthostinterface.cpp" />
     <ClCompile Include="$(IntDir)moc_qtprogresscallback.cpp" />
@@ -219,6 +246,7 @@
   <ItemGroup>
     <None Include="translations\duckstation-qt_es.ts" />
     <None Include="translations\duckstation-qt_it.ts" />
+    <None Include="translations\duckstation-qt_ru.ts" />
   </ItemGroup>
   <Target Name="CopyCommonDataFiles" AfterTargets="Build" Inputs="@(CommonDataFiles)" Outputs="@(CommonDataFiles -> '$(BinaryOutputDir)%(RecursiveDir)%(Filename)%(Extension)')">
     <Message Text="Copying common data files" Importance="High" />

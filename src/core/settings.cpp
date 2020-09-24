@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "common/file_system.h"
 #include "common/make_array.h"
 #include "common/string_util.h"
 #include "host_interface.h"
@@ -6,6 +7,8 @@
 #include <array>
 
 Settings g_settings;
+
+SettingsInterface::~SettingsInterface() = default;
 
 const char* SettingInfo::StringDefaultValue() const
 {
@@ -127,12 +130,14 @@ void Settings::Load(SettingsInterface& si)
   display_active_end_offset = static_cast<s16>(si.GetIntValue("Display", "ActiveEndOffset", 0));
   display_linear_filtering = si.GetBoolValue("Display", "LinearFiltering", true);
   display_integer_scaling = si.GetBoolValue("Display", "IntegerScaling", false);
+  display_post_processing = si.GetBoolValue("Display", "PostProcessing", false);
   display_show_osd_messages = si.GetBoolValue("Display", "ShowOSDMessages", true);
   display_show_fps = si.GetBoolValue("Display", "ShowFPS", false);
   display_show_vps = si.GetBoolValue("Display", "ShowVPS", false);
   display_show_speed = si.GetBoolValue("Display", "ShowSpeed", false);
   display_show_resolution = si.GetBoolValue("Display", "ShowResolution", false);
   video_sync_enabled = si.GetBoolValue("Display", "VSync", true);
+  display_post_process_chain = si.GetStringValue("Display", "PostProcessChain", "");
 
   cdrom_read_thread = si.GetBoolValue("CDROM", "ReadThread", true);
   cdrom_region_check = si.GetBoolValue("CDROM", "RegionCheck", true);
@@ -152,7 +157,6 @@ void Settings::Load(SettingsInterface& si)
   gpu_fifo_size = static_cast<u32>(si.GetIntValue("Hacks", "GPUFIFOSize", DEFAULT_GPU_FIFO_SIZE));
   gpu_max_run_ahead = si.GetIntValue("Hacks", "GPUMaxRunAhead", DEFAULT_GPU_MAX_RUN_AHEAD);
 
-  bios_path = si.GetStringValue("BIOS", "Path", "bios/scph1001.bin");
   bios_patch_tty_enable = si.GetBoolValue("BIOS", "PatchTTYEnable", false);
   bios_patch_fast_boot = si.GetBoolValue("BIOS", "PatchFastBoot", false);
 
@@ -169,12 +173,14 @@ void Settings::Load(SettingsInterface& si)
     ParseMemoryCardTypeName(
       si.GetStringValue("MemoryCards", "Card1Type", GetMemoryCardTypeName(DEFAULT_MEMORY_CARD_1_TYPE)).c_str())
       .value_or(DEFAULT_MEMORY_CARD_1_TYPE);
-  memory_card_paths[0] = si.GetStringValue("MemoryCards", "Card1Path", "memcards/shared_card_1.mcd");
+  memory_card_paths[0] =
+    si.GetStringValue("MemoryCards", "Card1Path", "memcards" FS_OSPATH_SEPARATOR_STR "shared_card_1.mcd");
   memory_card_types[1] =
     ParseMemoryCardTypeName(
       si.GetStringValue("MemoryCards", "Card2Type", GetMemoryCardTypeName(DEFAULT_MEMORY_CARD_2_TYPE)).c_str())
       .value_or(DEFAULT_MEMORY_CARD_2_TYPE);
-  memory_card_paths[1] = si.GetStringValue("MemoryCards", "Card2Path", "memcards/shared_card_2.mcd");
+  memory_card_paths[1] =
+    si.GetStringValue("MemoryCards", "Card2Path", "memcards" FS_OSPATH_SEPARATOR_STR "shared_card_2.mcd");
   memory_card_use_playlist_title = si.GetBoolValue("MemoryCards", "UsePlaylistTitle", true);
 
   log_level = ParseLogLevelName(si.GetStringValue("Logging", "LogLevel", GetLogLevelName(DEFAULT_LOG_LEVEL)).c_str())
@@ -236,12 +242,17 @@ void Settings::Save(SettingsInterface& si) const
   si.SetStringValue("Display", "AspectRatio", GetDisplayAspectRatioName(display_aspect_ratio));
   si.SetBoolValue("Display", "LinearFiltering", display_linear_filtering);
   si.SetBoolValue("Display", "IntegerScaling", display_integer_scaling);
+  si.SetBoolValue("Display", "PostProcessing", display_post_processing);
   si.SetBoolValue("Display", "ShowOSDMessages", display_show_osd_messages);
   si.SetBoolValue("Display", "ShowFPS", display_show_fps);
   si.SetBoolValue("Display", "ShowVPS", display_show_vps);
   si.SetBoolValue("Display", "ShowSpeed", display_show_speed);
   si.SetBoolValue("Display", "ShowResolution", display_show_speed);
   si.SetBoolValue("Display", "VSync", video_sync_enabled);
+  if (display_post_process_chain.empty())
+    si.DeleteValue("Display", "PostProcessChain");
+  else
+    si.SetStringValue("Display", "PostProcessChain", display_post_process_chain.c_str());
 
   si.SetBoolValue("CDROM", "ReadThread", cdrom_read_thread);
   si.SetBoolValue("CDROM", "RegionCheck", cdrom_region_check);
@@ -259,7 +270,6 @@ void Settings::Save(SettingsInterface& si) const
   si.SetIntValue("Hacks", "GPUFIFOSize", gpu_fifo_size);
   si.SetIntValue("Hacks", "GPUMaxRunAhead", gpu_max_run_ahead);
 
-  si.SetStringValue("BIOS", "Path", bios_path.c_str());
   si.SetBoolValue("BIOS", "PatchTTYEnable", bios_patch_tty_enable);
   si.SetBoolValue("BIOS", "PatchFastBoot", bios_patch_fast_boot);
 

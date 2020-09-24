@@ -15,6 +15,9 @@ set(SRCS
   autoupdaterdialog.cpp
   autoupdaterdialog.h
   autoupdaterdialog.ui
+  biossettingswidget.cpp
+  biossettingswidget.h
+  biossettingswidget.ui
   consolesettingswidget.cpp
   consolesettingswidget.h
   consolesettingswidget.ui
@@ -52,8 +55,19 @@ set(SRCS
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
+  memorycardeditordialog.cpp
+  memorycardeditordialog.h
+  memorycardeditordialog.ui
   memorycardsettingswidget.cpp
   memorycardsettingswidget.h
+  postprocessingchainconfigwidget.cpp
+  postprocessingchainconfigwidget.h
+  postprocessingchainconfigwidget.ui
+  postprocessingsettingswidget.cpp
+  postprocessingsettingswidget.h
+  postprocessingsettingswidget.ui
+  postprocessingshaderconfigwidget.cpp
+  postprocessingshaderconfigwidget.h
   qtdisplaywidget.cpp
   qtdisplaywidget.h
   qthostinterface.cpp

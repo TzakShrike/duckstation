@@ -6,6 +6,8 @@
     <file>icons/antialias-icon@2x.png</file>
     <file>icons/applications-development.png</file>
     <file>icons/applications-development@2x.png</file>
+    <file>icons/applications-graphics.png</file>
+    <file>icons/applications-graphics@2x.png</file>
     <file>icons/applications-internet.png</file>
     <file>icons/applications-other.png</file>
     <file>icons/applications-other@2x.png</file>
@@ -21,6 +23,7 @@
     <file>icons/camera-video@2x.png</file>
     <file>icons/conical-flask-red.png</file>
     <file>icons/conical-flask-red@2x.png</file>
+    <file>icons/cover-placeholder.png</file>
     <file>icons/document-open.png</file>
     <file>icons/document-open@2x.png</file>
     <file>icons/document-save.png</file>
@@ -32,6 +35,8 @@
     <file>icons/duck.png</file>
     <file>icons/duck_128.png</file>
     <file>icons/duck_64.png</file>
+    <file>icons/edit-clear-16.png</file>
+    <file>icons/edit-clear-16@2x.png</file>
     <file>icons/edit-find.png</file>
     <file>icons/flag-eu.png</file>
     <file>icons/flag-eu@2x.png</file>
@@ -43,6 +48,10 @@
     <file>icons/flag-us@2x.png</file>
     <file>icons/folder-open.png</file>
     <file>icons/folder-open@2x.png</file>
+    <file>icons/go-down-16.png</file>
+    <file>icons/go-down-16@2x.png</file>
+    <file>icons/go-up-16.png</file>
+    <file>icons/go-up-16@2x.png</file>
     <file>icons/input-gaming.png</file>
     <file>icons/input-gaming@2x.png</file>
     <file>icons/list-add.png</file>
@@ -51,6 +60,8 @@
     <file>icons/list-remove@2x.png</file>
     <file>icons/media-flash.png</file>
     <file>icons/media-flash@2x.png</file>
+    <file>icons/media-flash-2.png</file>
+    <file>icons/media-flash-2@2x.png</file>
     <file>icons/media-flash-24.png</file>
     <file>icons/media-flash-24@2x.png</file>
     <file>icons/media-optical.png</file>

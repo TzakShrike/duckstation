@@ -1,9 +1,11 @@
 #include "displaysettingswidget.h"
 #include "core/gpu.h"
 #include "core/settings.h"
+#include "postprocessingchainconfigwidget.h"
 #include "qtutils.h"
 #include "settingsdialog.h"
 #include "settingwidgetbinder.h"
+#include <QtWidgets/QMessageBox>
 
 // For enumerating adapters.
 #include "frontend-common/vulkan_host_display.h"
