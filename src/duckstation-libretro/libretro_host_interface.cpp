@@ -6,6 +6,7 @@
 #include "common/string_util.h"
 #include "core/analog_controller.h"
 #include "core/bus.h"
+#include "core/cheats.h"
 #include "core/digital_controller.h"
 #include "core/gpu.h"
 #include "core/system.h"
@@ -158,9 +159,31 @@ std::string LibretroHostInterface::GetGameMemoryCardPath(const char* game_code, 
 
 std::string LibretroHostInterface::GetShaderCacheBasePath() const
 {
-  // TODO: Is there somewhere we can save our shaders?
-  Log_WarningPrint("No shader cache directory available, startup will be slower.");
-  return std::string();
+  // Use the save directory, and failing that, the system directory.
+  const char* save_directory_ptr = nullptr;
+  if (!g_retro_environment_callback(RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY, &save_directory_ptr) || !save_directory_ptr)
+  {
+    save_directory_ptr = nullptr;
+    if (!g_retro_environment_callback(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY, &save_directory_ptr) ||
+        !save_directory_ptr)
+    {
+      Log_WarningPrint("No shader cache directory available, startup will be slower.");
+      return std::string();
+    }
+  }
+
+  // Use a directory named "duckstation_cache" in the save/system directory.
+  std::string shader_cache_path = StringUtil::StdStringFromFormat(
+    "%s" FS_OSPATH_SEPARATOR_STR "duckstation_cache" FS_OSPATH_SEPARATOR_STR, save_directory_ptr);
+  if (!FileSystem::DirectoryExists(shader_cache_path.c_str()) &&
+      !FileSystem::CreateDirectory(shader_cache_path.c_str(), false))
+  {
+    Log_ErrorPrintf("Failed to create shader cache directory: '%s'", shader_cache_path.c_str());
+    return std::string();
+  }
+
+  Log_InfoPrintf("Shader cache directory: '%s'", shader_cache_path.c_str());
+  return shader_cache_path;
 }
 
 std::string LibretroHostInterface::GetStringSettingValue(const char* section, const char* key,
@@ -369,6 +392,29 @@ size_t LibretroHostInterface::retro_get_memory_size(unsigned id)
   }
 }
 
+void LibretroHostInterface::retro_cheat_reset()
+{
+  System::SetCheatList(nullptr);
+}
+
+void LibretroHostInterface::retro_cheat_set(unsigned index, bool enabled, const char* code)
+{
+  CheatList* cl = System::GetCheatList();
+  if (!cl)
+  {
+    System::SetCheatList(std::make_unique<CheatList>());
+    cl = System::GetCheatList();
+  }
+
+  CheatCode cc;
+  cc.description = StringUtil::StdStringFromFormat("Cheat%u", index);
+  cc.enabled = true;
+  if (!CheatList::ParseLibretroCheat(&cc, code))
+    Log_ErrorPrintf("Failed to parse cheat %u '%s'", index, code);
+
+  cl->SetCode(index, std::move(cc));
+}
+
 bool LibretroHostInterface::AcquireHostDisplay()
 {
   // start in software mode, switch to hardware later
@@ -399,7 +445,7 @@ void LibretroHostInterface::OnSystemDestroyed()
   m_using_hardware_renderer = false;
 }
 
-static std::array<retro_core_option_definition, 32> s_option_definitions = {{
+static std::array<retro_core_option_definition, 33> s_option_definitions = {{
   {"duckstation_Console.Region",
    "Console Region",
    "Determines which region/hardware to emulate. Auto-Detect will use the region of the disc inserted.",
@@ -499,6 +545,11 @@ static std::array<retro_core_option_definition, 32> s_option_definitions = {{
    "Force NTSC Timings",
    "Forces PAL games to run at NTSC timings, i.e. 60hz. Some PAL games will run at their \"normal\" speeds, while "
    "others will break.",
+   {{"true", "Enabled"}, {"false", "Disabled"}},
+   "false"},
+  {"duckstation_Display.Force4_3For24Bit",
+   "Force 4:3 For 24-Bit Display",
+   "Switches back to 4:3 display aspect ratio when displaying 24-bit content, usually FMVs.",
    {{"true", "Enabled"}, {"false", "Disabled"}},
    "false"},
   {"duckstation_GPU.TextureFilter",
@@ -1007,7 +1058,7 @@ void LibretroHostInterface::SwitchToHardwareRenderer()
     wi.surface_height = avi.geometry.base_height;
     wi.surface_scale = 1.0f;
     if (!display || !display->CreateRenderDevice(wi, {}, g_settings.gpu_use_debug_device) ||
-        !display->InitializeRenderDevice({}, g_settings.gpu_use_debug_device))
+        !display->InitializeRenderDevice(GetShaderCacheBasePath(), g_settings.gpu_use_debug_device))
     {
       Log_ErrorPrintf("Failed to create hardware host display");
       return;

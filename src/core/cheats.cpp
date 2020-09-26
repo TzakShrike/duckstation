@@ -149,7 +149,7 @@ bool CheatList::LoadFromLibretroFile(const char* filename)
     while (*value_start != '\0' && std::isspace(*value_start))
       value_start++;
 
-    if (value_start == end)
+    if (*value_start == '\0')
       continue;
 
     char* value_end = value_start + std::strlen(value_start) - 1;
@@ -158,9 +158,6 @@ bool CheatList::LoadFromLibretroFile(const char* filename)
       *value_end = '\0';
       value_end--;
     }
-
-    if (value_start == value_end)
-      continue;
 
     if (*value_start == '\"')
     {
@@ -178,7 +175,7 @@ bool CheatList::LoadFromLibretroFile(const char* filename)
     return false;
 
   const std::string* num_cheats_value = FindKey(kvp, "cheats");
-  const u32 num_cheats = StringUtil::FromChars<u32>(*num_cheats_value).value_or(0);
+  const u32 num_cheats = num_cheats_value ? StringUtil::FromChars<u32>(*num_cheats_value).value_or(0) : 0;
   if (num_cheats == 0)
     return false;
 
@@ -196,47 +193,58 @@ bool CheatList::LoadFromLibretroFile(const char* filename)
     CheatCode cc;
     cc.description = *desc;
     cc.enabled = StringUtil::FromChars<bool>(*enable).value_or(false);
-
-    const char* current_ptr = code->c_str();
-    while (current_ptr)
-    {
-      char* end_ptr;
-      CheatCode::Instruction inst;
-      inst.first = static_cast<u32>(std::strtoul(current_ptr, &end_ptr, 16));
-      current_ptr = end_ptr;
-      if (end_ptr)
-      {
-        if (*end_ptr != ' ')
-        {
-          Log_WarningPrintf("Malformed code '%s'", code->c_str());
-          break;
-        }
-
-        end_ptr++;
-        inst.second = static_cast<u32>(std::strtoul(current_ptr, &end_ptr, 16));
-        current_ptr = end_ptr;
-
-        if (end_ptr)
-        {
-          if (*end_ptr != '+')
-          {
-            Log_WarningPrintf("Malformed code '%s'", code->c_str());
-            break;
-          }
-
-          end_ptr++;
-          current_ptr = end_ptr;
-        }
-
-        cc.instructions.push_back(inst);
-      }
-    }
-
-    m_codes.push_back(std::move(cc));
+    if (ParseLibretroCheat(&cc, code->c_str()))
+      m_codes.push_back(std::move(cc));
   }
 
   Log_InfoPrintf("Loaded %zu cheats from '%s' (libretro format)", m_codes.size(), filename);
   return !m_codes.empty();
+}
+
+static bool IsLibretroSeparator(char ch)
+{
+  return (ch == ' ' || ch == '-' || ch == ':' || ch == '+');
+}
+
+bool CheatList::ParseLibretroCheat(CheatCode* cc, const char* line)
+{
+  const char* current_ptr = line;
+  while (current_ptr)
+  {
+    char* end_ptr;
+    CheatCode::Instruction inst;
+    inst.first = static_cast<u32>(std::strtoul(current_ptr, &end_ptr, 16));
+    current_ptr = end_ptr;
+    if (end_ptr)
+    {
+      if (!IsLibretroSeparator(*end_ptr))
+      {
+        Log_WarningPrintf("Malformed code '%s'", line);
+        break;
+      }
+
+      end_ptr++;
+      inst.second = static_cast<u32>(std::strtoul(current_ptr, &end_ptr, 16));
+      if (end_ptr && *end_ptr == '\0')
+        end_ptr = nullptr;
+
+      if (end_ptr && *end_ptr != '\0')
+      {
+        if (!IsLibretroSeparator(*end_ptr))
+        {
+          Log_WarningPrintf("Malformed code '%s'", line);
+          break;
+        }
+
+        end_ptr++;
+      }
+
+      current_ptr = end_ptr;
+      cc->instructions.push_back(inst);
+    }
+  }
+
+  return !cc->instructions.empty();
 }
 
 void CheatList::Apply()
@@ -253,6 +261,20 @@ void CheatList::AddCode(CheatCode cc)
   m_codes.push_back(std::move(cc));
 }
 
+void CheatList::SetCode(u32 index, CheatCode cc)
+{
+  if (index > m_codes.size())
+    return;
+
+  if (index == m_codes.size())
+  {
+    m_codes.push_back(std::move(cc));
+    return;
+  }
+
+  m_codes[index] = std::move(cc);
+}
+
 void CheatList::RemoveCode(u32 i)
 {
   m_codes.erase(m_codes.begin() + i);
@@ -265,7 +287,6 @@ std::optional<CheatList::Format> CheatList::DetectFileFormat(const char* filenam
     return Format::Count;
 
   char line[1024];
-  KeyValuePairVector kvp;
   while (std::fgets(line, sizeof(line), fp.get()))
   {
     char* start = line;
